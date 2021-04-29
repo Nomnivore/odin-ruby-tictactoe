@@ -1,9 +1,13 @@
 # frozen_string_literal: false
 
 require './space'
+require './logic'
 # Tictactoe game board
 class Board
+  include Logic
   attr_reader :state
+
+  private
 
   def default_rows
     [
@@ -22,6 +26,21 @@ class Board
     end
   end
 
+  private
+
+  def get_space(num)
+    @state.flatten.select { |x| x.spot == num }[0]
+  end
+
+  def play(spot, flag)
+    return unless %i[x o].include?(flag)
+    
+    space = get_space(spot)
+    return false if space.occupied
+
+    space.occupy(flag)
+  end
+
   def to_s
     " %s | %s | %s \n"\
     "―――|―――|―――\n"\
@@ -31,5 +50,5 @@ class Board
   end
 end
 
-puts Board.new
+Board.new.check
 # print Board.new.board.to_s

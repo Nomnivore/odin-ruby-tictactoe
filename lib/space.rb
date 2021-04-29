@@ -2,6 +2,8 @@
 
 # This class will serve as each of the 9 components of the game board
 class Space
+  attr_reader :spot, :occupied
+
   @occupied = nil
   @spot = 0
   def initialize(spot)
@@ -9,8 +11,8 @@ class Space
     @occupied = nil
   end
 
-  def occupy(player)
-    return unless %i[x o].include?(player)
+  def occupy(flag)
+    return unless %i[x o].include?(flag)
 
     @occupied = player
     self
