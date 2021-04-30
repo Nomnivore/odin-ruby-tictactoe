@@ -30,13 +30,15 @@ def get_spot(board)
 end
 
 game_state = :new
-first = true
-board = nil
-turn = rand.round.zero?
 
 while game_state
   case game_state
   when :new
+    first = true
+    board = nil
+    turn = rand.round.zero? # picks who to start first randomly
+    winner = false
+
     system 'clear'
     puts 'Welcome to Ruby TicTacToe! This game will consist of 2 local players. Are you ready to play?'.bold
     ready = yes_or_no
@@ -57,10 +59,24 @@ while game_state
     puts header
     puts "\n#{board}"
     puts "\nPlease enter 1-9 corresponding to the space you want to play."
+
     spot = get_spot(board)
     board.play(spot, plr.flag)
     first = false
     turn = !turn
 
+    winner = board.check_winner
+    game_state = :end if winner
+  when :end
+    system 'clear'
+    header = if winner == :tie
+               "GG! It's a draw!".bold.green
+             else
+               "#{board.get_player(winner).name} wins!".bold.blue
+             end
+    puts header
+    puts "\n#{board}"
+    puts "\nWould you like to start a new game?".bold
+    game_state = yes_or_no ? :new : nil
   end
 end

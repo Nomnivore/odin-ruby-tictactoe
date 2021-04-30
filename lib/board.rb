@@ -43,8 +43,13 @@ class Board
   end
 
   def get_player(bool)
-    # true = player1, false = player2
-    bool ? @players[0] : @players[1]
+    if [true, false].include? bool
+      bool ? @players[0] : @players[1]
+    elsif bool == :x
+      @players[0]
+    else
+      @players[1]
+    end
   end
 
   def to_s
