@@ -20,7 +20,7 @@ module Logic
 
   private
 
-  def all_eql(x, y, z)
+  def all_eql(x, y, z) # rubocop:disable Naming/MethodParameterName
     return false unless x.occupied?
 
     return x.occupied if x.occupied == y.occupied && x.occupied == z.occupied
