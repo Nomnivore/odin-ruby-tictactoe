@@ -1,5 +1,7 @@
 # frozen_string_literal: false
 
+require 'colorize'
+
 # This class will serve as each of the 9 components of the game board
 class Space
   attr_reader :spot, :occupied
@@ -14,16 +16,20 @@ class Space
   def occupy(flag)
     return unless %i[x o].include?(flag)
 
-    @occupied = player
+    @occupied = flag
     self
+  end
+
+  def occupied?
+    @occupied ? true : false
   end
 
   def to_s
     case @occupied
     when :x
-      'X'
+      'X'.bold
     when :o
-      'O'
+      'O'.bold
     else
       @spot.to_s
     end

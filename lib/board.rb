@@ -27,7 +27,7 @@ class Board
     end
   end
 
-  private
+  public
 
   def get_space(num)
     @state.flatten.select { |x| x.spot == num }[0]
@@ -35,14 +35,14 @@ class Board
 
   def play(spot, flag)
     return unless %i[x o].include?(flag)
-    
+
     space = get_space(spot)
-    return false if space.occupied
+    return false if space.occupied?
 
     space.occupy(flag)
   end
 
-  def get_player(bool) 
+  def get_player(bool)
     # true = player1, false = player2
     bool ? @players[0] : @players[1]
   end
