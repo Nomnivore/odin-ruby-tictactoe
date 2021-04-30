@@ -1,7 +1,7 @@
 # frozen_string_literal: false
 
-require './space'
-require './logic'
+require_relative './space'
+require_relative './logic'
 # Tictactoe game board
 class Board
   include Logic
@@ -17,9 +17,10 @@ class Board
     ]
   end
 
-  def initialize
+  def initialize(player1, player2)
     # create a new blank board
     @state = []
+    @players = [player1, player2]
     default_rows.each_with_index do |row, ind|
       @state[ind] = []
       row.each { |col| @state[ind].push(Space.new(col)) }
@@ -41,6 +42,11 @@ class Board
     space.occupy(flag)
   end
 
+  def get_player(bool) 
+    # true = player1, false = player2
+    bool ? @players[0] : @players[1]
+  end
+
   def to_s
     " %s | %s | %s \n"\
     "―――|―――|―――\n"\
@@ -49,6 +55,3 @@ class Board
     ' %s | %s | %s ' % @state.flatten # rubocop:disable Style/FormatString
   end
 end
-
-Board.new.check
-# print Board.new.board.to_s
